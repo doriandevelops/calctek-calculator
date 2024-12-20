@@ -1,4 +1,4 @@
-# Patient Prism Interview Exercise
+# Calctek Calculator Interview Exercise
 
 ## Introduction
 
