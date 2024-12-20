@@ -264,6 +264,16 @@ const calculateLive = async () => {
 
 const saveCalculation = async (expression, result) => {
     try {
+        if (history.value.length > 0) {
+            const lastCalc = history.value[0];
+            if (
+                lastCalc.expression === expression &&
+                parseFloat(lastCalc.result) === parseFloat(result)
+            ) {
+                return;
+            }
+        }
+
         const response = await axios.post("/api/calculator/calculate", {
             expression: expression,
             result: result,
@@ -290,6 +300,9 @@ const calculate = async () => {
         }
 
         const finalResult = math.round(result, 8);
+
+        await saveCalculation(currentExpression.value, finalResult);
+
         currentResult.value = finalResult;
         currentExpression.value = finalResult.toString();
         isNewCalculation.value = true;
